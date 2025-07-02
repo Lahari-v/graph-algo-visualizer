@@ -1,0 +1,39 @@
+package visualizer;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.List;
+
+public class DataStructurePanel extends JPanel {
+    private DefaultListModel<String> listModel;
+    private JList<String> stateList;
+    private JLabel titleLabel;
+
+    public DataStructurePanel(String title) {
+        setLayout(new BorderLayout());
+        setPreferredSize(new Dimension(200, 0)); // Width = 200px
+
+        titleLabel = new JLabel(title, SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        add(titleLabel, BorderLayout.NORTH);
+
+        listModel = new DefaultListModel<>();
+        stateList = new JList<>(listModel);
+        JScrollPane scrollPane = new JScrollPane(stateList);
+        add(scrollPane, BorderLayout.CENTER);
+    }
+
+    public void updateContents(List<String> items) {
+        listModel.clear();
+        for (String item : items) {
+            listModel.addElement(item);
+        }
+        stateList.revalidate();
+        stateList.repaint();
+        System.out.println("JList contents: " + listModel);
+    }
+
+    public void setTitle(String title) {
+        titleLabel.setText(title);
+    }
+}
